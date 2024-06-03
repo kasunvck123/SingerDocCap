@@ -1,0 +1,277 @@
+<style>
+  .element {
+    display: inline-flex;
+    align-items: center;
+  }
+  i.fa-camera {
+    margin: 10px;
+    cursor: pointer;
+    font-size: 30px;
+  }
+  i:hover {
+    opacity: 0.6;
+  }
+  .CardButton {
+    display: grid;
+    align-items: center;
+    height:90px;
+  }
+  #fileuploadhdn {
+    display: none;
+  }
+</style>
+
+<div class="animated fadeIn">
+    <div class="row" *ngIf="IsSiteUpdated">
+      <div class="col-md-12 mb-8">
+        <!-- Nav tabs -->
+        <tabset #staticTabs>
+          <tab>
+            <ng-template tabHeading><i class="icon-list" style="color:forestgreen;font-weight:700"></i> <span style="font-weight:bold">&nbsp;Types</span></ng-template>
+
+            <div class="row">
+              <div class="col-6 col-md-3 mb-2">
+                <div class="card" style="width: 100%;">
+                  <div class="card-body text-center" style="padding:0px !important;font-weight:700">
+                    <a (click)="selectTab(1,'CREDIT CARD')" class="btn btn-primary CardButton" style="padding: 0px !important; width: 100%; background-color: #8080ff; border: none; font-weight: 700; color: white"><!--<i class="icon-doc" style="color:white;font-weight:700"></i>--> CREDIT CARD</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-md-3 mb-2">
+                <div class="card" style="    width: 100%;">
+                  <div class="card-body text-center" style="padding:0px !important;font-weight:700">
+                    <a (click)="selectTab(1,'CREDIT CARD SETTLEMENT')" class="btn btn-primary CardButton" style="padding: 0px !important; width: 100%; background-color: #adad85; border: none; font-weight: 700; color: white"><!--<i class="icon-doc" style="color:white;font-weight:700"></i>--> CREDIT CARD SETTLEMENT</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-md-3 mb-2">
+                <div class="card" style="width: 100%;">
+                  <div class="card-body text-center" style="padding:0px !important;font-weight:700">
+                    <a (click)="selectTab(1,'CHEQUE')" class="btn btn-primary CardButton" style="padding: 0px !important; width: 100%; border: none; font-weight: 700; color: white; background-color: #668cff; border: none"><span><!--<i class="icon-doc" style="color:white;font-weight:700"></i>-->CHEQUE</span></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-md-3 mb-2">
+                <div class="card" style="width: 100%;">
+                  <div class="card-body text-center" style="padding:0px !important;font-weight:700">
+                    <a (click)="selectTab(1,'CHEQUE SLIP')" class="btn btn-primary CardButton" style="padding: 0px !important; width: 100%; background-color: #ff794d; border: none; font-weight: 700; color: white"><!--<i class="icon-doc" style="color:white;font-weight:700"></i>--> CHEQUE SLIP</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6 col-md-3  mb-2">
+                <div class="card" style="width: 100%;">
+                  <div class="card-body text-center" style="padding:0px !important;font-weight:700">
+                    <a (click)="selectTab(1,'BANK SLIP')" class="btn btn-primary CardButton" style="padding: 0px !important; width: 100%; background-color: #bf80ff; border: none; font-weight: 700; color: white"><!--<i class="icon-doc" style="color:white;font-weight:700"></i> <br>-->BANK SLIP</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-md-3 mb-2">
+                <div class="card" style="    width: 100%;">
+                  <div class="card-body text-center" style="padding:0px !important;font-weight:700">
+                    <a (click)="selectTab(1,'WESTERN UNION')" class="btn btn-primary CardButton" style="padding: 0px !important; width: 100%; background-color: #ff66a3; border: none; font-weight: 700; color: white"><!--<i class="icon-doc" style="color:white;font-weight:700"></i>--> WESTERN UNION</a>
+                  </div>
+                </div>
+              </div>
+              <!--<div class="col-lg-3 col-md-3 mb-2">
+    <div class="card" style="    width: 100%;">
+      <div class="card-body text-center" style="padding:0px !important;font-weight:700">
+        <a (click)="selectTab(1,'SETTLEMENT')" class="btn btn-primary CardButton" style="width:100%;background:#ff8080;border:none;font-weight:700;color:white">-->
+              <!--<i class="icon-doc" style="color:white;font-weight:700"></i>-->
+              <!--SETTLEMENT</a>
+        </div>
+      </div>
+    </div>-->
+              <div class="col-6 col-md-3 col-sm mb-2">
+                <div class="card" style="    width: 100%;">
+                  <div class="card-body text-center" style="padding:0px !important;font-weight:700">
+                    <a (click)="selectTab(1,'OTHERS')" class="btn btn-primary CardButton" style="padding:0px !important; width:100%;background-color:#86af49;border:none;font-weight:700;color:white"><!--<i class="icon-doc" style="color:white;font-weight:700"></i>--> OTHERS</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </tab>
+          <tab [disabled]="true">
+            <ng-template tabHeading><i class="icon-camera" style="color:red"></i> <span style="font-weight:bold">&nbsp;{{documentType}}</span></ng-template>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div>
+                  <webcam [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+                          [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+                          [videoOptions]="videoOptions"
+                          [imageQuality]="1"
+                          (cameraSwitched)="cameraWasSwitched($event)"
+                          (initError)="handleInitError($event)"></webcam>
+                  <br />
+                  <!--<button type="button" class="btn btn-primary">
+        Single Button <i class="icon-camera" style="color:red"></i>
+      </button>
+      <button class="actionBtn" (click)="triggerSnapshot();">Take A Snapshot</button>
+      <button class="actionBtn" (click)="toggleWebcam();">Toggle Webcam</button>
+      <br />
+      <button class="actionBtn" (click)="showNextWebcam(true);" [disabled]="!multipleWebcamsAvailable">Next Webcam</button>
+      <input id="cameraSwitchCheckbox" type="checkbox" [(ngModel)]="allowCameraSwitch"><label for="cameraSwitchCheckbox">Allow Camera Switch</label>
+      <br />
+      DeviceId: <input id="deviceId" type="text" [(ngModel)]="deviceId" style="width: 500px">
+      <button (click)="showNextWebcam(deviceId);">Activate</button>-->
+                </div>
+              </div>
+              <div class="col-md-1" style="text-align:center">
+                <button type="button" class="btn btn-warning mb-1 mr-1" title="Capture Image" (click)="triggerSnapshot();">
+
+                  <i class="cil-camera" style=" font-size: 25px; font-weight: 700; color: black;"></i>
+                </button>
+                <!--<button type="button" class="btn btn-success" (click)="triggerSnapshot();">
+      <i class="cil-cloud-upload" style=" font-size: 35px; font-weight: 700; color: black;"></i>
+    </button>-->
+                <button (click)="fileInput.click()" class="btn btn-success mb-1 mr-1" title="Upload Image">
+                  <i class="cil-image" style="font-size: 25px; font-weight: 700; color: black;"></i>
+                </button>
+                <input class="file-input"
+                       type="file"
+                       name="file"
+                       id="fileuploadhdn"
+                       #fileInput
+                       (change)="onChange(fileInput.files[0])" accept="image/png, image/jpg, image/jpeg" />
+
+              </div>
+              <div class="col-md-5">
+                <div class="snapshot">
+                  <img [src]="imageUrl" style="width:100%" />
+                  <img src="../../../assets/img/noImage.png" style="display: block; margin-left: auto; margin-right: auto; width: 50%;" *ngIf="!imageUrl" />
+                </div>
+              </div>
+
+            </div>
+
+            <!--<div class="row">
+              <div class="col-md-12" style="text-align:center">
+                <button type="button" class="btn btn-warning" (click)="triggerSnapshot();">
+
+                  <i class="cil-camera" style=" font-size: 20px; font-weight: 700; color: black;"></i>
+                </button>-->
+                <!--<button type="button" class="btn btn-success" (click)="triggerSnapshot();">
+        <i class="cil-cloud-upload" style=" font-size: 35px; font-weight: 700; color: black;"></i>
+      </button>-->
+                <!--<button (click)="fileInput.click()" class="btn btn-success">
+                  <i class="cil-image" style="font-size: 20px; font-weight: 700; color: black;"></i>
+                </button>
+                <input class="file-input"
+                       type="file"
+                       name="file"
+                       id="fileuploadhdn"
+                       #fileInput
+                       (change)="onChange(fileInput.files[0])" accept="image/png, image/jpg, image/jpeg" />
+
+              </div>
+            </div>-->
+            <form #documentInfoForm="ngForm" appIdentityRevealed>
+              <div class="row mt-3 cross-validation"  [class.cross-validation-error]="documentInfoForm.errors?.identityRevealed && (documentInfoForm.touched || documentInfoForm.dirty)" >
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <strong>Document Infomation</strong>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-2">
+                          <div class="form-check" *ngIf="documentType=='CHEQUE'">
+
+                            <input class="form-check-input" type="checkbox" value="chequeIssue" id="chequeIssue" [(ngModel)]="chequeIssue" [ngModelOptions]="{standalone: true}">
+                            <label class="form-check-label" for="checkbox1" style="font-weight:600">
+                              Issue Cheque
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="form-group">
+                            <label for="name" style="font-weight:600"><span style="color:red">*</span> RSL Period</label>
+                            <ng-select [(ngModel)]="selectedRSLPeriod" [ngModelOptions]="{standalone: true}"  name="selectedRSLPeriodFE" id="selectedRSLPeriodFE" #selectedRSLPeriodFE="ngModel" required>
+                              <ng-option *ngFor="let rslperiod of RSLPeriods" [value]="rslperiod">{{rslperiod.rslPeriodTitle}}</ng-option>
+                            </ng-select>
+                            <!--<div *ngIf="selectedRSLPeriodFE?.invalid && (selectedRSLPeriodFE.dirty || selectedRSLPeriodFE.touched)"
+                                 class="alert alert-danger">
+                              <div *ngIf="selectedRSLPeriodFE.errors.required">
+                                RSL period is required.
+                              </div>
+
+                            </div>-->
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="form-group">
+                            <label for="ccnumber" style="font-weight:600"><span style="color:red">*</span> Document Number</label>
+                            <input type="text" class="form-control" name="documentNoFE" id="documentNoFE" [(ngModel)]="documentNo" [ngModelOptions]="{standalone: true}" #documentNoFE="ngModel" required>
+                            <!--<div *ngIf="documentNoFE?.invalid && (documentNoFE.dirty || documentNoFE.touched)"
+                                 class="alert alert-danger">
+                              <div *ngIf="documentNoFE.errors.required">
+                                Document number is required.
+                              </div>
+
+                            </div>-->
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="form-group">
+                            <label for="ccnumber" style="font-weight:600"><span style="color:red">*</span> Document Amount</label>
+                            <input type="text" class="form-control"  name="documentAmountFE" id="documentAmountFE" [(ngModel)]="documentAmount" #documentAmountFE="ngModel" [ngModelOptions]="{standalone: true}"  appTwoDigitDecimaNumber inputmode="decimal" required>
+                            <!--<div *ngIf="documentAmountFE?.invalid && (documentAmountFE.dirty || documentAmountFE.touched)"
+                                 class="alert alert-danger">
+                              <div *ngIf="documentAmountFE.errors.required">
+                                Document amount is required.
+                              </div>
+
+                            </div>-->
+                          </div>
+                        </div>
+                      </div><!--/.row-->
+                      <div class="row">
+                        <div class="col-sm-11">
+                          <div class="form-group">
+                            <label for="ccnumber" style="font-weight:600">Remark</label>
+                            <textarea id="documentRemark" name="documentRemark" rows="3" class="form-control" [(ngModel)]="documentRemark" [ngModelOptions]="{standalone: true}"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="IssubmitButton">
+                        <div class="col-md-12">
+                          <div class="alert alert-warning" role="alert">
+                            Please wait !
+                          </div>
+                        </div>
+                      </div>
+                        <div class="row">
+                          <div class="col-md-12" style="text-align:center">
+
+                            <button type="button" class="btn btn-danger mr-5" title="Clear information" (click)="ClearForm()" [disabled]="IssubmitButton">
+                              <i class="cil-delete" style=" font-size: 25px; font-weight: 700; color: black;"></i><span style="display: table;">Clear</span> 
+                            </button>
+                            <button type="button" class="btn btn-primary mr-5" title="Upload Image" (click)="UploadImage();" [disabled]="IssubmitButton">
+                              <i class="cil-save" style=" font-size: 25px; font-weight: 700; color: black;"></i> <span style="display: table;">Save</span>
+                            </button>
+                            <!--<button type="button" class="btn btn-secondary mr-1" [disabled]="IssubmitButton">
+    <i class="cil-exit-to-app" style=" font-size: 20px; font-weight: 700; color: black;"></i>
+  </button>-->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </form>          
+          </tab>
+        </tabset>
+      </div><!--/.col-->
+    </div><!--/.row-->
+   <div class="row" *ngIf="!IsSiteUpdated">
+    <div class="col-md-12 mb-8">
+      <div class="alert alert-warning" role="alert">
+       Please update your site !
+      </div>
+    </div>
+   </div>
+</div>

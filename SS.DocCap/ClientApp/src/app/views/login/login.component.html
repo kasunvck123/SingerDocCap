@@ -1,0 +1,58 @@
+<div class="app-body">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          <div class="card-group">
+            <div class="card p-2">
+              <div class="card-body">
+                <form>
+                  <img src="../../../assets/img/Singer-Logo.png" style="width:60%;display: block;
+    margin-left: auto;
+    margin-right: auto;"/>
+                  <hr />
+                  <h3 style=" color: red; text-align: center; font-weight: 700;">Doc Capture</h3>
+                  <hr />
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-user"></i></span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Username" [(ngModel)]="userName" autocomplete="username" [ngModelOptions]="{standalone: true}" required>
+                  </div>
+                  <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-lock"></i></span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="Password" [(ngModel)]="passwordInput" autocomplete="current-password" [ngModelOptions]="{standalone: true}" required>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="alert alert-danger" role="alert" *ngIf="loginFailed">
+                        Login Failed !
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12" style="text-align:center">
+                      <button type="button" class="btn btn-danger px-4" (click)="login()" style="font-weight:600">{{loginText}}</button>
+                    </div>                  
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="card text-white py-5 d-md-down-none" style="width:44%;background-color:#4ec0b6" >
+              <div class="card-body text-center">
+                <img src="../assets/img/Adobe-Scan-App.jpg" style="width:100%;display: block;
+                     margin-left: auto;
+                     margin-right: auto;" />
+                <div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

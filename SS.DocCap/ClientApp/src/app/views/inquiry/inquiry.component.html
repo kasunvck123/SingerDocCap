@@ -1,0 +1,236 @@
+<style>
+  .element {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  i.fa-camera {
+    margin: 10px;
+    cursor: pointer;
+    font-size: 30px;
+  }
+
+  i:hover {
+    opacity: 0.6;
+  }
+
+  #fileuploadhdn {
+    display: none;
+  }
+</style>
+
+<div class="animated fadeIn">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <strong>Inquiry</strong>
+            </div>
+            <div class="card-body">
+              <div class="form-group row">
+
+                <div class="col-md-12 col-form-label">
+                  <div class="form-check form-check-inline mr-1 mb-1" id="inline-radios" style=" background: #668cff; padding: 5px; color: white; font-weight: 600;">
+                    <input class="form-check-input" type="radio" name="inline-radios" id="CHEQUE" value="CHEQUE" [(ngModel)]="selectedDocType" [ngModelOptions]="{standalone: true}">
+                    <label class="form-check-label" for="inlineRadio1">CHEQUE</label>
+                  </div>
+                  <div class="form-check form-check-inline mr-1 mb-1" style=" background: #bf80ff; padding: 5px; color: white; font-weight: 600;">
+                    <input class="form-check-input" type="radio" name="inline-radios" id="BANKSLIP" value="BANK SLIP" [(ngModel)]="selectedDocType" [ngModelOptions]="{standalone: true}">
+                    <label class="form-check-label" for="inlineRadio2">BANK SLIP</label>
+                  </div>
+                  <div class="form-check form-check-inline mr-1 mb-1" style=" background: #ff794d; padding: 5px; color: white; font-weight: 600;">
+                    <input class="form-check-input" type="radio" name="inline-radios" id="CHEQUESLIP" value="CHEQUE SLIP" [(ngModel)]="selectedDocType" [ngModelOptions]="{standalone: true}">
+                    <label class="form-check-label" for="inlineRadio3">CHEQUE SLIP</label>
+                  </div>
+                  <div class="form-check form-check-inline mr-1 mb-1" style=" background: #8080ff; padding: 5px; color: white; font-weight: 600;">
+                    <input class="form-check-input" type="radio" name="inline-radios" id="CREDITCARD" value="CREDIT CARD" [(ngModel)]="selectedDocType" [ngModelOptions]="{standalone: true}">
+                    <label class="form-check-label" for="inlineRadio3">CREDIT CARD</label>
+                  </div>
+                  <div class="form-check form-check-inline mr-1 mb-1" style=" background: #adad85; padding: 5px; color: white; font-weight: 600;">
+                    <input class="form-check-input" type="radio" name="inline-radios" id="CREDITCARDSETTLEMENT" value="CREDIT CARD SETTLEMENT" [(ngModel)]="selectedDocType" [ngModelOptions]="{standalone: true}">
+                    <label class="form-check-label" for="inlineRadio3">CREDIT CARD SETTLEMENT</label>
+                  </div>
+                  <div class="form-check form-check-inline mr-1 mb-1" style=" background: #ff66a3; padding: 5px; color: white; font-weight: 600;">
+                    <input class="form-check-input" type="radio" name="inline-radios" id="WESTERNUNION" value="WESTERN UNION" [(ngModel)]="selectedDocType" [ngModelOptions]="{standalone: true}">
+                    <label class="form-check-label" for="inlineRadio3">WESTERN UNION</label>
+                  </div>
+                  <!--<div class="form-check form-check-inline mr-1 mb-1" style=" background: #ff8080; padding: 5px; color: white; font-weight: 600;">
+                    <input class="form-check-input" type="radio" name="inline-radios" id="SETTLEMENT" value="SETTLEMENT" [(ngModel)]="selectedDocType" [ngModelOptions]="{standalone: true}">
+                    <label class="form-check-label" for="inlineRadio3">SETTLEMENT</label>
+                  </div>-->
+                  <div class="form-check form-check-inline mr-1 mb-1" style="    background: #86af49;
+    padding: 5px;
+    color: white;
+    font-weight: 600;">
+                    <input class="form-check-input" type="radio" name="inline-radios" id="OTHERS" value="OTHERS" [(ngModel)]="selectedDocType" [ngModelOptions]="{standalone: true}">
+                    <label class="form-check-label" for="OTHERS">OTHERS</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-2">
+                  <div class="form-check" *ngIf="selectedDocType=='CHEQUE'">
+
+                    <input class="form-check-input" type="checkbox" value="chequeIssue" id="chequeIssue" [(ngModel)]="chequeIssue" [ngModelOptions]="{standalone: true}">
+                    <label class="form-check-label" for="checkbox1" style="font-weight:600">
+                      Issue Cheque
+                    </label>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="name" style="font-weight:600"><span style="color:red">*</span> RSL Period</label>
+                    <ng-select [(ngModel)]="selectedRSLPeriod" [ngModelOptions]="{standalone: true}"  name="selectedRSLPeriodFE" id="selectedRSLPeriodFE" #selectedRSLPeriodFE="ngModel">
+                      <ng-option *ngFor="let rslperiod of RSLPeriods" [value]="rslperiod">{{rslperiod.rslPeriodTitle}}</ng-option>
+                    </ng-select>
+
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="ccnumber" style="font-weight:600"> Document Number</label>
+                    <input type="text" class="form-control" name="documentNoFE" id="documentNoFE" [(ngModel)]="documentNo" [ngModelOptions]="{standalone: true}" #documentNoFE="ngModel">
+
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="ccnumber" style="font-weight:600"> Document Amount</label>
+                    <input type="text" class="form-control" name="documentAmountFE" id="documentAmountFE" [(ngModel)]="documentAmount" #documentAmountFE="ngModel" [ngModelOptions]="{standalone: true}" inputmode="decimal" appTwoDigitDecimaNumber>
+
+                  </div>
+                </div>
+              </div><!--/.row-->
+
+              <div class="form-group row">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-md-3">
+                  <label for="ccnumber" style="font-weight:600"><span style="color:red">*</span> Date from</label>
+                  <input class="form-control" [(ngModel)]="fromDate" [ngModelOptions]="{standalone: true}" id="date-input" type="date" name="date-input" placeholder="date">
+
+                </div>
+
+                <div class="col-md-3">
+                  <label for="ccnumber" style="font-weight:600"><span style="color:red">*</span> Date to</label>
+                  <input class="form-control" [(ngModel)]="toDate" [ngModelOptions]="{standalone: true}" id="date-input" type="date" name="date-input" placeholder="date">
+
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-md-12" style="text-align:center">
+                  <button type="button" class="btn btn-primary mr-5 mb-1" (click)="search();">
+                    <i class="cil-search" style=" font-size: 25px; font-weight: 700; color: black;"></i>
+                  </button>
+                  <button type="button" class="btn btn-danger mr-5 mb-1" (click)="ClearForm()" [disabled]="IssubmitButton">
+                    <i class="cil-delete" style=" font-size: 25px; font-weight: 700; color: black;"></i>
+                  </button>
+                </div>
+              </div>
+              <hr />
+              <div class="row mt-1">
+                <div class="col-md-12" style="overflow:scroll">
+                  <table datatable class="row-border hover" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>RSL Period</th>
+                        <th>Document Type</th>
+                        <th>Document Number</th>
+                        <th>Document Amount</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let data of searchresult">
+                        <td>
+                          <button type="button" class="btn btn-info" (click)="selectdata(data)">
+                            <i class="cil-image" style=" font-size: 15px; font-weight: 700; color: black;"></i>
+                          </button>
+                        </td>
+                        <td>{{data.rslPeriod}}</td>
+                        <td>{{data.documentType}}</td>
+                        <td>{{data.documentNo}}</td>
+                        <td>{{data.documentAmount}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="snapshot">
+                    <img [src]="imageUrl" style="width:100%" />
+                    <img src="../../../assets/img/noImage.png" style="display: block; margin-left: auto; margin-right: auto; width: 50%;" *ngIf="!imageUrl" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="ccnumber" style="font-weight:600"> RSL Period</label>
+                        <input type="text" class="form-control" name="documentnumberFE" id="documentnumberFE" [(ngModel)]="sselectedRSLPeriod" readonly [ngModelOptions]="{standalone: true}" appTwoDigitDecimaNumber />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="ccnumber" style="font-weight:600"> Document Type</label>
+                        <input type="text" class="form-control" name="documentnumberFE" id="documentnumberFE" [(ngModel)]="sdocumentType" readonly [ngModelOptions]="{standalone: true}" appTwoDigitDecimaNumber />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="ccnumber" style="font-weight:600"> Document Number</label>
+                        <input type="text" class="form-control" name="documentnumberFE" id="documentnumberFE" [(ngModel)]="sdocumentNo" readonly [ngModelOptions]="{standalone: true}" appTwoDigitDecimaNumber />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="ccnumber" style="font-weight:600"> Document Amount</label>
+                        <input type="text" class="form-control" name="documentnumberFE" id="documentnumberFE" [(ngModel)]="sdocumentAmount" readonly [ngModelOptions]="{standalone: true}" appTwoDigitDecimaNumber />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <div class="form-group" *ngIf="selectedDocType=='CHEQUE'">
+                        <input class="form-check-input" type="checkbox" value="chequeIssue" id="chequeIssue" readonly [(ngModel)]="schequeIssue" [ngModelOptions]="{standalone: true}">
+                        <label class="form-check-label" for="checkbox1" style="font-weight:600">
+                          Issue Cheque
+                        </label>
+
+                      </div>
+                    </div>
+                    <div class="col-md-10">
+                      <div class="form-group">
+                        <label for="ccnumber" style="font-weight:600"> Remark</label>
+                        <textarea id="documentRemark" name="documentRemark" rows="3" class="form-control" readonly [(ngModel)]="sdocumentRemark" [ngModelOptions]="{standalone: true}"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" *ngIf="IssubmitButton">
+                <div class="col-md-12">
+                  <div class="alert alert-warning" role="alert">
+                    Please wait !
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
